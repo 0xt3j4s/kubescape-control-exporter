@@ -1,0 +1,23 @@
+apiVersion: spdx.softwarecomposition.kubescape.io/v1beta1
+kind: VulnerabilityManifestSummary
+metadata:
+  # Metadata here
+spec:
+  severities:
+    critical:
+      all: 10
+      relevant: 5
+    high:
+      all: 8
+      relevant: 3
+    medium:
+      all: 6
+      relevant: 2
+    low:
+      all: 2
+      relevant: 0
+    other:
+      all: 4
+      relevant: 1
+  vulnerabilities:
+    # Vulnerabilities data here
