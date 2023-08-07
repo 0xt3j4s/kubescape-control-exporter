@@ -7,6 +7,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Summary is a struct that contains the summary of the YAML file
 type YAMLData struct {
 	Spec ControlsSummary `yaml:"spec"`
 }
@@ -16,11 +17,28 @@ type ControlsSummary struct {
 }
 
 type Severities struct {
-	Critical map[string]interface{} `yaml:"critical"`
-	High     map[string]interface{} `yaml:"high"`
-	Medium   map[string]interface{} `yaml:"medium"`
-	Low      map[string]interface{} `yaml:"low"`
-	Other    map[string]interface{} `yaml:"other"`
+	Critical map[string]SeverityControls `yaml:"critical"`
+	High     map[string]SeverityControls `yaml:"high"`
+	Medium   map[string]SeverityControls `yaml:"medium"`
+	Low      map[string]SeverityControls `yaml:"low"`
+	Other    map[string]SeverityControls `yaml:"other"`
+}
+
+type SeverityControls struct {
+	All      int `yaml:"all"`
+	Relevant int `yaml:"relevant"`
+}
+
+func (sc *SeverityControls) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	var values map[string]int
+	err := unmarshal(&values)
+	if err == nil {
+		sc.All = values["all"]
+		sc.Relevant = values["relevant"]
+		return nil
+	}
+
+	return unmarshal(&sc.All)
 }
 
 func parseYAML(fileContent []byte) (*ControlsSummary, error) {
@@ -33,6 +51,7 @@ func parseYAML(fileContent []byte) (*ControlsSummary, error) {
 }
 
 func main() {
+	// Read the sample YAML file
 	file, err := os.Open("test.yaml")
 	if err != nil {
 		fmt.Println(err)
@@ -53,8 +72,23 @@ func main() {
 		return
 	}
 
-	fmt.Printf("Summary: %v\n", summary)
-
+	// Print the controls for each category
+	fmt.Println("Summary:")
+	printControls(summary.Severities.Critical, "Critical")
+	printControls(summary.Severities.High, "High")
+	printControls(summary.Severities.Medium, "Medium")
+	printControls(summary.Severities.Low, "Low")
+	printControls(summary.Severities.Other, "Other")
 }
 
-
+func printControls(controlsMap map[string]SeverityControls, category string) {
+	fmt.Printf("Category: %s\n", category)
+	for controlName, control := range controlsMap {
+		if control.Relevant == 0 {
+		fmt.Printf("%s: %d,\n", controlName, control.All)
+		} else {
+		fmt.Printf("%s: %d,\n", controlName, control.Relevant)
+		}
+	}
+	fmt.Println()
+}
