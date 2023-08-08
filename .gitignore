@@ -11,6 +11,8 @@
 # Ignore the data directory
 data/
 
+kubescape-control-exporter 
+
 # Test binary, built with `go test -c`
 *.test
 
