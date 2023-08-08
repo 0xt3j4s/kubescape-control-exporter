@@ -151,8 +151,8 @@ func main() {
 
 	// Expose metrics via HTTP
 	http.Handle("/metrics", promhttp.Handler())
-	fmt.Println("\nExporter is running at :8080/metrics")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	fmt.Println("\nExporter is running at :8070/metrics")
+	log.Fatal(http.ListenAndServe(":8070", nil))
 }
 
 func printControls(controlsMap map[string]SeverityControls, category string) {
