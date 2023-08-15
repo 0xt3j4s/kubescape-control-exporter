@@ -1,0 +1,11 @@
+groups:
+  - name: Critical Controls Exceeded
+    rules:
+    - alert: CriticalSeverityAlert
+      expr: controls_cluster_critical > 5
+      for: 10s
+      labels:
+        severity: high
+      annotations:
+        summary: "Critical Severity Controls Exceeded"
+        description: "The count of critical severity controls is above the threshold."

@@ -9,7 +9,12 @@ import (
 	"gopkg.in/yaml.v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"k8s.io/client-go/kubernetes"
+    // "k8s.io/client-go/rest"
+    // "k8s.io/client-go/tools/cache"
 )
+
+var kubeClient *kubernetes.Clientset
 
 // Summary is a struct that contains the summary of the YAML file
 type YAMLData struct {
@@ -32,6 +37,8 @@ type SeverityControls struct {
 	All      int `yaml:"all"`
 	Relevant int `yaml:"relevant"`
 }
+
+
 
 func (sc *SeverityControls) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	var values map[string]int
