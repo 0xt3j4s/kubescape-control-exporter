@@ -40,6 +40,7 @@ prometheus --config.file=prometheus.yml
 ![prometheus](./images/prometheus.png)
 4. Grafana dashboard:
 ![grafana](./images/grafana.png)
+![grafana-dash](./images/grafana-dashboard.png)
 
 
 
