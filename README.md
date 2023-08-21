@@ -38,6 +38,8 @@ prometheus --config.file=prometheus.yml
 ![metrics](./images/metrics.png)
 3. Prometheus web-UI:
 ![prometheus](./images/prometheus.png)
+4. Grafana dashboard:
+![grafana](./images/grafana.png)
 
 
 
